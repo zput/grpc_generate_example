@@ -9,64 +9,64 @@ option go_package = "this_repositry_path/go_gens;go_gens";
 
 /*********************结构定义*********************/
 
-//平台信息
+
 enum Platform {
-  UNKNOWN = 0; //未知平台
-  IOS = 1; //iOS
-  ANDROID = 2; //Android
-  ELECTRON_MAC = 3; //Mac
-  ELECTRON_WIN = 4; //Mac
-  WEB_ADMIN = 5; //网页管理端
+  UNKNOWN = 0; 
+  IOS = 1; 
+  ANDROID = 2; 
+  ELECTRON_MAC = 3; 
+  ELECTRON_WIN = 4; 
+  WEB_ADMIN = 5; 
 }
 
-//设备信息
+
 message Device {
 
-  //显示分辨率
+  
   message Display {
-    int32 width = 1; //宽
-    int32 height = 2; //高
+    int32 width = 1; 
+    int32 height = 2; 
   }
 
-  string systemVersion = 1; //手机系统版本号
-  string model = 2; //机型eg:iPhone3,1 iPhone7,1 Huawei xxx
-  string brand = 3; //品牌，eg: Apple, Huawei ...
-  Display display = 4; //屏幕分辨率
-  string imei = 5; //iOS中填的vendor identifier
-  string deviceLock = 6; //设备指纹，用于token生成
+  string systemVersion = 1; 
+  string model = 2; 
+  string brand = 3; 
+  Display display = 4; 
+  string imei = 5; 
+  string deviceLock = 6; 
 }
 
-//请求头
+
 message Header {
-  int64 userId = 1; //用户ID
-  Device device = 2; //设备
-  Platform platform = 3; //平台
-  string token = 4; //用户票据
-  string refreshToken = 5; //刷新票据
-  int64 timestamp = 6; //服务器时间戳
-  uint32 appID = 7; //区分不同应用
-  string appVer = 8; //应用版本号
-  uint32 appBuildVer = 9; //应用build版本号
+  int64 userId = 1; 
+  Device device = 2; 
+  Platform platform = 3; 
+  string token = 4; 
+  string refreshToken = 5; 
+  int64 timestamp = 6; 
+  uint32 appID = 7; 
+  string appVer = 8; 
+  uint32 appBuildVer = 9; 
 }
 
 /*********************接口定义*********************/
 
-//请求包
+
 message Request {
-  Header header = 1; //请求头
-  google.protobuf.Any body = 2; //请求包体
+  Header header = 1; 
+  google.protobuf.Any body = 2; 
 }
 
-//响应包
+
 message Response {
 
-  //响应码
+  
   message Ret {
-    codesprite.define.RetCode code = 1; //返回码
-    string msg = 2; //信息
+    codesprite.define.RetCode code = 1; 
+    string msg = 2; 
   }
 
-  Header header = 1; //响应头
-  google.protobuf.Any body = 2; //业务响应数据
-  Ret ret = 3; //响应信息
+  Header header = 1; 
+  google.protobuf.Any body = 2; 
+  Ret ret = 3; 
 }
