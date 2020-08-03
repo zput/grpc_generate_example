@@ -1,5 +1,7 @@
-api_protos := $(wildcard src/protoc/*.proto)
-types_protos := $(wildcard src/*.proto src/define/*.proto src/define/doc/*.proto)
+# just need modify this
+api_protos := $(wildcard protoc/sub_protoc/*.proto)
+
+types_protos := $(wildcard protoc/*.proto protoc/common_protoc/*.proto)
 types_protos += $(api_protos)
 
 go_pb_objs := $(patsubst %.proto, %.pb.go, $(types_protos))  	
@@ -46,24 +48,24 @@ clean:
 
 # single file build cmd
 %.pb.go: %.proto
-	protoc -Isrc -Ivendors --go_out=plugins=grpc,paths=source_relative:./go_gens $<
+	protoc -Iprotoc -Ivendors --go_out=plugins=grpc,paths=source_relative:./go_gens $<
 
 %.pb.gw.go: %.proto
-	protoc -Isrc -Ivendors --grpc-gateway_out=logtostderr=true,paths=source_relative,grpc_api_configuration=$*@restful.yaml:./go_gens_gw $*.proto
-	protoc -Isrc -Ivendors --swagger_out=logtostderr=true,grpc_api_configuration=$*@restful.yaml:./go_gens_gw $*.proto
+	protoc -Iprotoc -Ivendors --grpc-gateway_out=logtostderr=true,paths=source_relative,grpc_api_configuration=$*@restful.yaml:./go_gens_gw $*.proto
+	protoc -Iprotoc -Ivendors --swagger_out=logtostderr=true,grpc_api_configuration=$*@restful.yaml:./go_gens_gw $*.proto
 
 %.pb.micro.go: %.proto
-	protoc -Isrc -Ivendors --micro_out=.,paths=source_relative:./go_gens $<
+	protoc -Iprotoc -Ivendors --micro_out=.,paths=source_relative:./go_gens $<
 
 %.pb.swift: %.proto
 	@mkdir -p swift_gens
 	protoc \
-	-Isrc \
+	-Iprotoc \
 	-Ivendors \
 	--swift_out=swift_gens $<
 
 %.pb.js: %.proto
 	@mkdir -p js_gens
-	pbjs -r $(notdir $*) -t static-module -w es6 --es6 --keep-case -o js_gens/$(notdir $@) $< -p src -p vendors
+	pbjs -r $(notdir $*) -t static-module -w es6 --es6 --keep-case -o js_gens/$(notdir $@) $< -p protoc -p vendors
 	pbts -o js_gens/$(notdir $*).pb.d.ts js_gens/$(notdir $@)
 

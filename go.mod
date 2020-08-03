@@ -1,4 +1,4 @@
-module gitlab.9dwit.com/backend/codesprite-protocol
+module some-project-protocol
 
 go 1.14
 
@@ -15,7 +15,5 @@ require (
 )
 
 replace (
-	github.com/grpc-ecosystem/grpc-gateway => github.com/grpc-ecosystem/grpc-gateway v1.10.0
-	github.com/micro/go-micro/v2 => github.com/micro/go-micro/v2 v2.6.0
 	google.golang.org/grpc => google.golang.org/grpc v1.26.0
 )

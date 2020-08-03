@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "google/protobuf/any.proto";
-import "define/enum.proto";
 
 package codesprite;
 
@@ -62,7 +61,7 @@ message Response {
 
   
   message Ret {
-    codesprite.define.RetCode code = 1; 
+    uint64 code = 1;
     string msg = 2; 
   }
 
